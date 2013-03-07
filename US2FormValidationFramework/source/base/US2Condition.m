@@ -39,13 +39,21 @@
     return [[[[self class] alloc] init] autorelease];
 }
 
+- (id)init
+{
+    if (self = [super init]) {
+        self.useCaseInsensitive = YES;
+    }
+    return self;
+}
+
 - (id)initWithLocalizedViolationString:(NSString *)localizedViolationString
 {
     if (self = [super init])
     {
+        self.useCaseInsensitive = YES;
         self.localizedViolationString = localizedViolationString;
     }
-    
     return self;
 }
 
@@ -53,10 +61,10 @@
 {
     if (self = [super init])
     {
+        self.useCaseInsensitive = YES;
         self.localizedViolationString = localizedViolationString;
         self.regexString = regexString;
     }
-    
     return self;
 }
 
@@ -64,9 +72,9 @@
 {
     if (self = [super init])
     {
+        self.useCaseInsensitive = YES;
         self.regexString = regexString;
     }
-    
     return self;
 }
 
@@ -100,8 +108,10 @@
     }
     else if(self.regexString)
     {
-        NSError *error = NULL;
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.regexString options:NSRegularExpressionCaseInsensitive error:&error];
+        NSError *error = NULL;    
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.regexString
+                                                                               options:self.useCaseInsensitive ? NSRegularExpressionCaseInsensitive : 0
+                                                                                 error:&error];
         if(!error)
         {
             NSUInteger numberOfMatches = [regex numberOfMatchesInString:string options:0 range:NSMakeRange(0, string.length)];

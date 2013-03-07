@@ -78,6 +78,11 @@
 @property (copy, nonatomic) NSString *localizedViolationString;
 
 /**
+ Default is *YES*. Use *NO* if you need to check caseInsensitive in your conditions
+ */
+@property (nonatomic, assign) BOOL useCaseInsensitive;
+
+/**
  If set to *NO* the user is not able to enter characters which would break the condition.
 */
 @property (nonatomic, assign) BOOL shouldAllowViolation;
